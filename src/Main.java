@@ -3,6 +3,8 @@ import org.hibernate.cfg.Configuration;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -25,10 +27,23 @@ class Author {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DOB")
-    Date DateOfBirth;
+    Date dateOfBirth;
 
     @Embedded
     Address address;
+
+
+    @ElementCollection
+    List<String> subjects = new ArrayList<String>();
+
+    public List<String> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
+    }
+
 
     public Address getAddress() {
         return address;
@@ -39,12 +54,12 @@ class Author {
     }
 
 
-    public Date getDateOfBirth() {
-        return DateOfBirth;
+    public Date getdateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        DateOfBirth = dateOfBirth;
+    public void setdateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
 
@@ -85,7 +100,7 @@ class Author {
 }
 
 @Embeddable
-class Address{
+class Address {
 
     int streetNumber;
     String location;
