@@ -1,12 +1,11 @@
 import org.hibernate.*;
-import org.hibernate.query.Query;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.sql.Date;
 
 
 @Entity
@@ -19,6 +18,14 @@ class Author {
     String firstName, lastName;
     int age;
     Date DateOfBirth;
+
+    public Date getDateOfBirth() {
+        return DateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        DateOfBirth = dateOfBirth;
+    }
 
 
     public String getFirstName() {
@@ -88,19 +95,6 @@ public class Main {
             session.save(author3);
             session.save(author4);
 
-            transaction.commit();
-
-            transaction=session.beginTransaction();
-            Author someAuthor = session.get(Author.class, 4);
-            System.out.println(someAuthor.toString());
-            someAuthor.setAge(45);
-            System.out.println(someAuthor.toString());
-            session.update(someAuthor);
-            transaction.commit();
-
-            transaction= session.beginTransaction();
-            Author someOtherAuthor = session.get(Author.class, 1);
-            session.delete(someOtherAuthor);
             transaction.commit();
 
             System.out.println("Done");
