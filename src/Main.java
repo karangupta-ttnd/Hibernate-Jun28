@@ -9,7 +9,7 @@ import java.sql.Date;
 class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Author_ID")
     int id;
 
