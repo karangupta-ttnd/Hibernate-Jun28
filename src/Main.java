@@ -1,10 +1,7 @@
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
 
 
@@ -12,11 +9,20 @@ import java.sql.Date;
 class Author {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "Author_ID")
     int id;
 
-    String firstName, lastName;
+    @Column(name = "FirstName")
+    String firstName;
+
+    @Column(name = "LastName")
+    String lastName;
+
+    @Column(name = "Age")
     int age;
+
+    @Column(name = "DOB")
     Date DateOfBirth;
 
     public Date getDateOfBirth() {
