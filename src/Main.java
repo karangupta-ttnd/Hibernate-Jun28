@@ -27,6 +27,16 @@ class Author {
     @Column(name = "DOB")
     Date DateOfBirth;
 
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+
     public Date getDateOfBirth() {
         return DateOfBirth;
     }
@@ -72,6 +82,12 @@ class Author {
 
 }
 
+class Address{
+
+    int streetNumber;
+    String location;
+    String State;
+}
 
 public class Main {
 
