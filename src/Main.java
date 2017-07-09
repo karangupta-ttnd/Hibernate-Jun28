@@ -97,6 +97,8 @@ public class Main {
 
             transaction.commit();
 
+            sessionFactory.close();
+
             System.out.println("Done");
 
 
