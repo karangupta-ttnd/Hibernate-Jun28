@@ -27,6 +27,8 @@ class Author {
     @Column(name = "DOB")
     Date DateOfBirth;
 
+    @Embedded
+    Address address;
 
     public Address getAddress() {
         return address;
@@ -82,6 +84,7 @@ class Author {
 
 }
 
+@Embeddable
 class Address{
 
     int streetNumber;
