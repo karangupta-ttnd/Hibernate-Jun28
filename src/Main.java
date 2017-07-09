@@ -16,6 +16,7 @@ class Author {
     @Column(name = "FirstName")
     String firstName;
 
+    @Transient
     @Column(name = "LastName")
     String lastName;
 
