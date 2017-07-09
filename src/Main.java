@@ -23,6 +23,7 @@ class Author {
     @Column(name = "Age")
     int age;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "DOB")
     Date DateOfBirth;
 
