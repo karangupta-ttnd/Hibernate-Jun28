@@ -80,12 +80,11 @@ class Author {
     @ElementCollection
     private List<String> subjects = new ArrayList<String>();
 
-    @OneToOne(cascade=CascadeType.ALL)
-    private Book authorBook;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Book> authorBook = new ArrayList<Book>();
 
-    public Author setAuthorBook(Book authorBook) {
+    public void setAuthorBook(List<Book> authorBook) {
         this.authorBook = authorBook;
-        return this;
     }
 
     public List<String> getSubjects() {
@@ -154,25 +153,24 @@ public class Main {
 
         Author author1 = new Author();
         Address address1 = new Address();
-        Book book1=new Book();
+        Book book1 = new Book();
+        Book book2 = new Book();
 
         Author author2 = new Author();
         Address address2 = new Address();
-        Book book2=new Book();
 
         Author author3 = new Author();
         Address address3 = new Address();
-        Book book3=new Book();
 
         Author author4 = new Author();
         Address address4 = new Address();
-        Book book4=new Book();
 
 
         List<String> someSubjects = new ArrayList<String>();
-
+        List<Book> listOfBooks = new ArrayList<Book>();
 
         try {
+
             // 1. configuring hibernate
             Configuration configuration = new Configuration().configure();
 
@@ -191,8 +189,11 @@ public class Main {
             someSubjects.add("Fiction");
             someSubjects.add("Sci-Fi");
             someSubjects.add("Horror");
-            book1.setBookName("GenericTitle");
-            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1).setAuthorBook(book1);
+            book1.setBookName("GenericTitle1");
+            book2.setBookName("GenericTitle2");
+            listOfBooks.add(book1);
+            listOfBooks.add(book2);
+            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1).setAuthorBook(listOfBooks);
 
             someSubjects.clear();
             address2.setStreetNumber(25);
