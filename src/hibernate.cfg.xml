@@ -24,6 +24,7 @@
 
         <!--Annotated entity class-->
         <mapping class="Author"/>
+        <mapping class="Book"/>
 
     </session-factory>
 </hibernate-configuration>
