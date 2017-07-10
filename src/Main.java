@@ -1,6 +1,4 @@
 import org.hibernate.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.ManyToAny;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.*;
@@ -17,6 +15,7 @@ class Book {
     private int bookId;
     private String bookName;
     @ManyToOne
+    @JoinColumn(name="Author_ID")
     private Author author;
 
     public void setAuthor(Author author) {
@@ -63,7 +62,7 @@ class Address {
 class Author {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "Author_ID")
     private int id;
 
@@ -87,11 +86,15 @@ class Author {
     @ElementCollection
     private List<String> subjects = new ArrayList<String>();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
     private List<Book> authorBook = new ArrayList<Book>();
 
     public void setAuthorBook(List<Book> authorBook) {
         this.authorBook = authorBook;
+    }
+
+    public List<Book> getAuthorBook() {
+        return authorBook;
     }
 
     public List<String> getSubjects() {
