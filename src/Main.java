@@ -14,12 +14,13 @@ class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookId;
     private String bookName;
-    @ManyToOne
-    @JoinColumn(name="Author_ID")
-    private Author author;
+    @Column(name = "itsAuthor")
+    @ManyToMany(mappedBy = "authorBook")
+    private List<Author> authorList = new ArrayList<Author>();
 
-    public void setAuthor(Author author) {
-        this.author = author;
+
+    public void setAuthorList(List<Author> authorList) {
+        this.authorList = authorList;
     }
 
     public String getBookName() {
@@ -86,15 +87,16 @@ class Author {
     @ElementCollection
     private List<String> subjects = new ArrayList<String>();
 
-    @OneToMany(mappedBy = "author",cascade = CascadeType.ALL)
+    @Column(name = "hisBooks")
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Book> authorBook = new ArrayList<Book>();
-
-    public void setAuthorBook(List<Book> authorBook) {
-        this.authorBook = authorBook;
-    }
 
     public List<Book> getAuthorBook() {
         return authorBook;
+    }
+
+    public void setAuthorBook(List<Book> authorBook) {
+        this.authorBook = authorBook;
     }
 
     public List<String> getSubjects() {
@@ -171,13 +173,21 @@ public class Main {
 
         Author author3 = new Author();
         Address address3 = new Address();
+        Book book3 = new Book();
 
         Author author4 = new Author();
         Address address4 = new Address();
 
 
-        List<String> someSubjects = new ArrayList<String>();
-        List<Book> listOfBooks = new ArrayList<Book>();
+        List<String> listOfSubjects1 = new ArrayList<String>();
+        List<String> listOfSubjects2 = new ArrayList<String>();
+        List<String> listOfSubjects3 = new ArrayList<String>();
+        List<String> listOfSubjects4 = new ArrayList<String>();
+        List<Book> listOfBooks1 = new ArrayList<Book>();
+        List<Book> listOfBooks3 = new ArrayList<Book>();
+        List<Author> listOfAuthors1 = new ArrayList<Author>();
+        List<Author> listOfAuthors3 = new ArrayList<Author>();
+
 
         try {
 
@@ -196,43 +206,61 @@ public class Main {
             address1.setStreetNumber(35);
             address1.setLocation("Malviya Nagar");
             address1.setState("Delhi");
-            someSubjects.add("Fiction");
-            someSubjects.add("Sci-Fi");
-            someSubjects.add("Horror");
+            listOfSubjects1.add("Fiction");
+            listOfSubjects1.add("Sci-Fi");
+            listOfSubjects1.add("Horror");
+
             book1.setBookName("GenericTitle1");
             book2.setBookName("GenericTitle2");
-            listOfBooks.add(book1);
-            listOfBooks.add(book2);
-            book1.setAuthor(author1);
-            book2.setAuthor(author1);
-            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1).setAuthorBook(listOfBooks);
 
-            someSubjects.clear();
+            listOfBooks1.add(book1);
+            listOfBooks1.add(book2);
+
+            listOfAuthors1.add(author1);
+            book1.setAuthorList(listOfAuthors1);
+            book2.setAuthorList(listOfAuthors1);
+
+            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(listOfSubjects1).setAddress(address1).setAuthorBook(listOfBooks1);
+
+
             address2.setStreetNumber(25);
             address2.setLocation("Ludhiana");
             address2.setState("Punjab");
-            someSubjects.add("Magic");
-            someSubjects.add("Thriller");
-            someSubjects.add("Comedy");
-            author2.setFirstName("J.K.").setLastName("Rowling").setAge(39).setSubjects(someSubjects).setAddress(address2);
 
-            someSubjects.clear();
+            listOfSubjects2.add("Magic");
+            listOfSubjects2.add("Thriller");
+            listOfSubjects2.add("Comedy");
+
+            author2.setFirstName("J.K.").setLastName("Rowling").setAge(39).setSubjects(listOfSubjects2).setAddress(address2);
+
+
             address3.setStreetNumber(36);
             address3.setLocation("Malviya Nagar");
             address3.setState("Delhi");
-            someSubjects.add("Sci-Fi");
-            someSubjects.add("Thriller");
-            someSubjects.add("Comedy");
-            author3.setFirstName("Charles").setLastName("Dickens").setAge(48).setSubjects(someSubjects).setAddress(address3);
 
-            someSubjects.clear();
+            listOfSubjects3.add("Sci-Fi");
+            listOfSubjects3.add("Thriller");
+            listOfSubjects3.add("Comedy");
+
+            book3.setBookName("GenericTitle3");
+
+            listOfAuthors3.add(author3);
+            listOfBooks3.add(book3);
+
+            book3.setAuthorList(listOfAuthors3);
+
+            author3.setFirstName("Charles").setLastName("Dickens").setAge(48).setSubjects(listOfSubjects3).setAddress(address3).setAuthorBook(listOfBooks3);
+
+
             address4.setStreetNumber(13);
             address4.setLocation("Subash Nagar");
             address4.setState("Delhi");
-            someSubjects.add("Love");
-            someSubjects.add("Drama");
-            someSubjects.add("Poetry");
-            author4.setFirstName("William").setLastName("Shakespeare").setAge(50).setSubjects(someSubjects).setAddress(address4);
+
+            listOfSubjects4.add("Love");
+            listOfSubjects4.add("Drama");
+            listOfSubjects4.add("Poetry");
+
+            author4.setFirstName("William").setLastName("Shakespeare").setAge(50).setSubjects(listOfSubjects4).setAddress(address4);
 
             session.save(author1);
             session.save(author2);
