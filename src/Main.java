@@ -7,6 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Entity
+class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
+    String bookName;
+}
 
 
 @Embeddable
@@ -134,18 +142,18 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Author author1 = new Author();
-        Address address1 =new Address();
+        Address address1 = new Address();
 
         Author author2 = new Author();
-        Address address2 =new Address();
+        Address address2 = new Address();
 
         Author author3 = new Author();
-        Address address3 =new Address();
+        Address address3 = new Address();
 
         Author author4 = new Author();
-        Address address4 =new Address();
+        Address address4 = new Address();
 
-        List<String> someSubjects =new ArrayList<String>();
+        List<String> someSubjects = new ArrayList<String>();
 
 
         try {
