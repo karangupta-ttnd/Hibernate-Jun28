@@ -1,4 +1,5 @@
 import org.hibernate.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.*;
@@ -12,17 +13,25 @@ class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
-    String bookName;
+    private int bookId;
+    private String bookName;
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 }
 
 
 @Embeddable
 class Address {
 
-    int streetNumber;
-    String location;
-    String State;
+    private int streetNumber;
+    private String location;
+    private String State;
 
     public Address setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
@@ -49,27 +58,35 @@ class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "Author_ID")
-    int id;
+    private int id;
 
     @Column(name = "FirstName")
-    String firstName;
+    private String firstName;
 
     @Transient
     @Column(name = "LastName")
-    String lastName;
+    private String lastName;
 
     @Column(name = "Age")
-    int age;
+    private int age;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "DOB")
-    Date dateOfBirth;
+    private Date dateOfBirth;
 
     @Embedded
-    Address address;
+    private Address address;
 
     @ElementCollection
-    List<String> subjects = new ArrayList<String>();
+    private List<String> subjects = new ArrayList<String>();
+
+    @OneToOne(cascade=CascadeType.ALL)
+    private Book authorBook;
+
+    public Author setAuthorBook(Book authorBook) {
+        this.authorBook = authorBook;
+        return this;
+    }
 
     public List<String> getSubjects() {
         return subjects;
@@ -85,20 +102,14 @@ class Author {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public Author setAddress(Address address) {
         this.address = address;
-
+        return this;
     }
 
-
-    public Date getdateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setdateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
 
     public String getFirstName() {
         return firstName;
@@ -143,15 +154,20 @@ public class Main {
 
         Author author1 = new Author();
         Address address1 = new Address();
+        Book book1=new Book();
 
         Author author2 = new Author();
         Address address2 = new Address();
+        Book book2=new Book();
 
         Author author3 = new Author();
         Address address3 = new Address();
+        Book book3=new Book();
 
         Author author4 = new Author();
         Address address4 = new Address();
+        Book book4=new Book();
+
 
         List<String> someSubjects = new ArrayList<String>();
 
@@ -175,7 +191,8 @@ public class Main {
             someSubjects.add("Fiction");
             someSubjects.add("Sci-Fi");
             someSubjects.add("Horror");
-            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1);
+            book1.setBookName("GenericTitle");
+            author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1).setAuthorBook(book1);
 
             someSubjects.clear();
             address2.setStreetNumber(25);
