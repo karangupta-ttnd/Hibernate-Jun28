@@ -1,5 +1,6 @@
 import org.hibernate.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.*;
@@ -15,6 +16,12 @@ class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int bookId;
     private String bookName;
+    @ManyToOne
+    private Author author;
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 
     public String getBookName() {
         return bookName;
@@ -193,6 +200,8 @@ public class Main {
             book2.setBookName("GenericTitle2");
             listOfBooks.add(book1);
             listOfBooks.add(book2);
+            book1.setAuthor(author1);
+            book2.setAuthor(author1);
             author1.setFirstName("Stephen").setLastName("King").setAge(35).setSubjects(someSubjects).setAddress(address1).setAuthorBook(listOfBooks);
 
             someSubjects.clear();
